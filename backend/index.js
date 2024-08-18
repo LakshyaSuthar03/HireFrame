@@ -4,6 +4,8 @@ import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import authMiddleware from "./middlewares/authMiddleware.js";
+import dashboardRouter from "./routes/dashboardRouters.js";
+import jobRouter from "./routes/jobRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -14,9 +16,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRoutes);
-app.get("/", authMiddleware, (req, res) => {
-  res.send("Welcome to the server");
-});
+app.use("/", authMiddleware, dashboardRouter);
+app.use("/job", authMiddleware, jobRouter);
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

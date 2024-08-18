@@ -10,9 +10,9 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10).then((hash) => hash);
-    const query = `INSERT INTO users (email, password_hash) VALUES ('${email}', '${hashedPassword}')`;
+    const query = `INSERT INTO users (email, password_hash) VALUES (?, ?)`;
 
-    connection.query(query, (error, result) => {
+    connection.query(query, [email, hashedPassword], (error, result) => {
       if (error) {
         return res.status(400).json({ message: "User already exists" });
       }
@@ -29,8 +29,8 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Please fill in all fields" });
     }
 
-    const query = `SELECT * FROM users WHERE email='${email}'`;
-    connection.query(query, async (error, result) => {
+    const query = `SELECT * FROM users WHERE email= ?`;
+    connection.query(query, [email], async (error, result) => {
       console.log(result);
 
       if (error) {
