@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #F7F6F7; /*page background color*/ 
+    --secondary: #FFFFFF; /*component background color*/ 
+    --tertiary: #2F2F2F;/*button background*/ 
+    --active: #1ED8AD; /*active*/ 
+    --disable: #D96362;/*disable*/ 
+    --textLight:#929292;/*not selected text*/ 
+    --textDark:#000000;/*selected text background*/ 
+  }
+
+  *{
+    user-select: none;
+  }
+
