@@ -31,8 +31,6 @@ const login = async (req, res) => {
 
     const query = `SELECT * FROM users WHERE email= ?`;
     connection.query(query, [email], async (error, result) => {
-      console.log(result);
-
       if (error) {
         return res.status(400).json({ message: "User does not exist" });
       }
@@ -47,7 +45,7 @@ const login = async (req, res) => {
         res.cookie("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production", // Set to true in production for HTTPS
-          maxAge: 3600000, // 1 hour
+          maxAge: 360000000000, //
           sameSite: "Strict", // 'Strict' or 'Lax' depending on your needs
         });
         const { password_hash, created_at, updated_at, ...userData } = user;

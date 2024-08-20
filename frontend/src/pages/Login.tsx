@@ -9,14 +9,22 @@ import { backend } from "../../config.json";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/Slices/authSlice";
 import { useDispatch } from "react-redux";
+
+axios.defaults.withCredentials = true;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleLogin = () => {
     axios
-      .post(`${backend}/auth/login`, { email, password })
+      .post(
+        `${backend}/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      )
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           dispatch(login(res.data));
