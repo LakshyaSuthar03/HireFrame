@@ -52,4 +52,5 @@ const getJobs = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 export { job, getJobs };
