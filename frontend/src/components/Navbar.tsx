@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { IoIosBriefcase } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/Slices/authSlice";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
+  const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -43,7 +47,25 @@ const Navbar = () => {
           alt=""
           className="h-8 w-8 rounded-full"
         />
-        <RiArrowDropDownLine />
+        <div
+          onClickCapture={() => {
+            setProfileMenuOpen((prev) => !prev);
+          }}
+        >
+          {profileMenuOpen ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
+        </div>
+        {profileMenuOpen && (
+          <ul className="absolute right-0 top-10 bg-white shadow-lg rounded-lg p-3 flex flex-col gap-2 z-10">
+            <li
+              className="bg-[var(--secondary)] px-3 py-1 rounded-2xl cursor-pointer"
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
+              Logout
+            </li>
+          </ul>
+        )}
         <div className="ml-3 md:hidden" onClick={toggleDropdown}>
           {isDropdownOpen ? <IoCloseOutline /> : <RxHamburgerMenu />}
         </div>

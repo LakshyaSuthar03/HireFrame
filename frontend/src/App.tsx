@@ -3,27 +3,37 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Layout from "./Utils/Layout";
 import LayoutPage from "./pages/Layout";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Protected from "./Utils/Protected";
+
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/layout/:id"
-          element={
-            <Layout>
-              <LayoutPage />
-            </Layout>
-          }
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
+        <Route element={<Protected />}>
+          <Route
+            path="/dashboard"
+            element={
+              <Layout>
+                <Dashboard />
+              </Layout>
+            }
+          />
+          <Route
+            path="/layout/:id"
+            element={
+              <Layout>
+                <LayoutPage />
+              </Layout>
+            }
+          />
+        </Route>
       </Routes>
     </div>
   );

@@ -50,7 +50,8 @@ const login = async (req, res) => {
           maxAge: 3600000, // 1 hour
           sameSite: "Strict", // 'Strict' or 'Lax' depending on your needs
         });
-        return res.status(200).json({ token });
+        const { password_hash, created_at, updated_at, ...userData } = user;
+        return res.status(200).json({ token, userData });
       } else {
         return res.status(400).json({ message: "Invalid credentials" });
       }
