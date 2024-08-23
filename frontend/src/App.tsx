@@ -6,6 +6,7 @@ import LayoutPage from "./pages/Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Protected from "./Utils/Protected";
+import HireFrame from "./components/HireFrame";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
               </Layout>
             }
           />
+          <Route path="/hire" element={<HireFrame />} />
         </Route>
       </Routes>
     </div>

@@ -4,9 +4,11 @@ import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import authMiddleware from "./middlewares/authMiddleware.js";
-import dashboardRouter from "./routes/dashboardRouters.js";
+import dashboardRouter from "./routes/dashboardRoutes.js";
 import jobRouter from "./routes/jobRoutes.js";
 import cookieParser from "cookie-parser";
+import embedJobRouter from "./routes/embedJobRoutes.js";
+import apiKeyCheckMiddleware from "./middlewares/apiKeyCheckMiddleware.js";
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRoutes);
 app.use("/", authMiddleware, dashboardRouter);
 app.use("/job", authMiddleware, jobRouter);
+app.use("/api/hireframe/", apiKeyCheckMiddleware, embedJobRouter); //api key check middleware
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

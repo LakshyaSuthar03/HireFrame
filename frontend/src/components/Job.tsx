@@ -1,24 +1,24 @@
 import ToggleSwitch from "./ToggleSwitch";
 
 interface JobProps {
-  role: string;
+  title: string;
   exp: string;
-  openings: number;
+  // openings: number;
   newApplications?: number;
 }
 
 const Job = ({
-  role,
+  title,
   exp,
-  openings,
+  // openings,
   newApplications,
 }: JobProps): JSX.Element => {
   return (
     <div className="p-3 relative bg-[var(--secondary)] h-28 min-w-52 rounded-2xl cursor-pointer">
       <div className="text-sm">
-        <p>Role: {role}</p>
+        <p>Title: {title}</p>
         <p>Exp: {exp}</p>
-        <p>Openings: {openings}</p>
+        {/* <p>Openings: {openings}</p> */}
       </div>
       <div className="ml-auto w-max ">
         <ToggleSwitch />

@@ -2,7 +2,7 @@ import connection from "../database/connection.js";
 const job = async (req, res) => {
   try {
     const {
-      layouts_id,
+      layout_id,
       title,
       description,
       requirements,
@@ -15,7 +15,7 @@ const job = async (req, res) => {
     connection.query(
       query,
       [
-        layouts_id,
+        layout_id,
         user_id,
         title,
         description,
@@ -40,6 +40,8 @@ const job = async (req, res) => {
 const getJobs = async (req, res) => {
   try {
     const { layouts_id } = req.body;
+    console.log(req.body);
+
     const query = `SELECT * FROM jobs WHERE layouts_id = ?`;
     connection.query(query, [layouts_id], (err, result) => {
       if (err) {

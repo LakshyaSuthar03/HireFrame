@@ -4,21 +4,25 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { backend } from "../../config.json";
+import AddJobPopup from "../components/AddJobPopup";
+import EmbedJobPopup from "../components/EmbedJobPopup";
 
 interface IJobs {
-  role: string;
-  exp: string;
-  openings: number;
-  newApplications: number;
+  title: string;
+  experience_range: string;
+  // openings: number;
+  newApplications?: number;
 }
 
 const Layout = () => {
   const [jobs, setJobs] = useState<IJobs[]>([]);
+  const [showJobPopup, setShowJobPopup] = useState<boolean>(false);
+  const [showEmbedPopUp, setShowEmbedPopUp] = useState<boolean>(false);
   const { id } = useParams();
 
   useEffect(() => {
     axios
-      .post(`${backend}/job/`, { layoutId: id })
+      .post(`${backend}/job/`, { layouts_id: id })
       .then((res) => {
         setJobs(res.data);
       })
@@ -27,17 +31,13 @@ const Layout = () => {
       });
   }, [id]);
 
-  const handleAddJob = () => {
-    // Add Job
-  };
-
   return (
-    <div className="mt-10">
-      <div className="flex w-max ml-auto gap-2">
-        <div>
+    <div className="mt-10 ">
+      <div className="flex w-max  ml-auto gap-2">
+        <div onClick={() => setShowEmbedPopUp(true)}>
           <Button text="Embed" icon="</>" />
         </div>
-        <div>
+        <div onClick={() => setShowJobPopup(true)}>
           <Button text="Add Job" icon="+" />
         </div>
       </div>
@@ -47,18 +47,27 @@ const Layout = () => {
             No Jobs Posted Yet! Add jobs
           </div>
         ) : (
-          jobs.map((job) => {
-            return (
-              <Job
-                role={job.role}
-                exp={job.exp}
-                openings={job.openings}
-                newApplications={job?.newApplications}
-              />
-            );
-          })
+          jobs.map((job, index) => (
+            <Job
+              key={index}
+              title={job.title}
+              exp={job.experience_range}
+              // openings={job.openings}
+              // newApplications={job?.newApplications}
+            />
+          ))
         )}
       </div>
+      {showJobPopup && (
+        <div className="w-screen h-screen bg-[var(--primary)] absolute top-0 right-0 flex items-center justify-center">
+          <AddJobPopup closeAddJobPopupState={setShowJobPopup} />
+        </div>
+      )}
+      {showEmbedPopUp && (
+        <div className="w-screen h-[1440px] bg-[var(--primary)] absolute top-0 right-0 flex justify-center">
+          <EmbedJobPopup closeEmbedJobPopup={setShowEmbedPopUp} />
+        </div>
+      )}
     </div>
   );
 };
