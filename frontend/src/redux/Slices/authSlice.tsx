@@ -1,17 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the type for the user object
-interface User {
+type userData = {
   id: string;
   name: string;
   email: string;
-}
+  api_key: string;
+  subscription: string;
+};
+type User = {
+  token: string;
+  userData: userData;
+};
 
 // Define the initial state type
-interface AuthState {
+type AuthState = {
   user: User | null;
   isAuthenticated: boolean;
-}
+};
 
 // Define the initial state
 const initialState: AuthState = {

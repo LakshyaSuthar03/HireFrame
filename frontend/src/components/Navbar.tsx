@@ -55,7 +55,7 @@ const Navbar = () => {
           {profileMenuOpen ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
         </div>
         {profileMenuOpen && (
-          <ul className="absolute right-0 top-10 bg-white shadow-lg rounded-lg p-3 flex flex-col gap-2 z-10">
+          <ul className="absolute right-0 top-10 bg-white shadow-lg rounded-lg p-3 flex flex-col gap-2 z-10 w-max">
             <li
               className="bg-[var(--secondary)] px-3 py-1 rounded-2xl cursor-pointer"
               onClick={() => {

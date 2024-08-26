@@ -6,6 +6,8 @@ import axios from "axios";
 import { backend } from "../../config.json";
 import AddJobPopup from "../components/AddJobPopup";
 import EmbedJobPopup from "../components/EmbedJobPopup";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/Store/store";
 
 interface IJobs {
   title: string;
@@ -18,7 +20,10 @@ const Layout = () => {
   const [jobs, setJobs] = useState<IJobs[]>([]);
   const [showJobPopup, setShowJobPopup] = useState<boolean>(false);
   const [showEmbedPopUp, setShowEmbedPopUp] = useState<boolean>(false);
-  const { id } = useParams();
+  const { id = "" } = useParams();
+  const apiKey = useSelector(
+    (state: RootState) => state.auth.user?.userData.api_key
+  );
 
   useEffect(() => {
     axios
@@ -65,7 +70,11 @@ const Layout = () => {
       )}
       {showEmbedPopUp && (
         <div className="w-screen h-[1440px] bg-[var(--primary)] absolute top-0 right-0 flex justify-center">
-          <EmbedJobPopup closeEmbedJobPopup={setShowEmbedPopUp} />
+          <EmbedJobPopup
+            closeEmbedJobPopup={setShowEmbedPopUp}
+            layoutId={id}
+            apiKey={apiKey ?? ""}
+          />
         </div>
       )}
     </div>

@@ -40,10 +40,9 @@ const job = async (req, res) => {
 const getJobs = async (req, res) => {
   try {
     const { layouts_id } = req.body;
-    console.log(req.body);
-
-    const query = `SELECT * FROM jobs WHERE layouts_id = ?`;
-    connection.query(query, [layouts_id], (err, result) => {
+    const { id } = req.user;
+    const query = `SELECT * FROM jobs WHERE layouts_id = ? AND user_id = ?`;
+    connection.query(query, [layouts_id, id], (err, result) => {
       if (err) {
         res.status(400).json({ message: err?.message });
       } else {

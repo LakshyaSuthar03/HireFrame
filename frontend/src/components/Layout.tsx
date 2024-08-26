@@ -15,10 +15,6 @@ const Layout = ({ name, id }: LayoutProps) => {
     >
       <div>{name}</div>
       <div className="flex items-center space-x-3">
-        <button className="bg-[var(--tertiary)] px-3 py-1 rounded-lg text-[var(--secondary)]">
-          EDIT
-        </button>
-
         <ToggleSwitch />
       </div>
     </div>

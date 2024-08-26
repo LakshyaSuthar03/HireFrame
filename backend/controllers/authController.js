@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import connection from "../database/connection.js";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 const register = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -10,14 +11,19 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10).then((hash) => hash);
-    const query = `INSERT INTO users (email, password_hash) VALUES (?, ?)`;
+    const apiKey = uuidv4();
+    const query = `INSERT INTO users (email, password_hash,api_key) VALUES (?, ?, ?)`;
 
-    connection.query(query, [email, hashedPassword], (error, result) => {
-      if (error) {
-        return res.status(400).json({ message: "User already exists" });
+    connection.query(
+      query,
+      [email, hashedPassword, apiKey],
+      (error, result) => {
+        if (error) {
+          return res.status(400).json({ message: "User already exists" });
+        }
+        res.status(201).json({ message: "User registered successfully" });
       }
-      res.status(201).json({ message: "User registered successfully" });
-    });
+    );
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
